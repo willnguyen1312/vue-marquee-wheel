@@ -123,7 +123,7 @@ const buttonTextLookup = {
     >
       {{ buttonTextLookup[state] }}
     </button>
-    <div class="relative overflow-hidden w-full md:w-8/12 cursor-pointer">
+    <div class="relative overflow-hidden w-full md:w-8/12">
       <div class="flex will-change-transform" :style="style">
         <div ref="list" class="flex flex-shrink-0 py-4 relative">
           <div
