@@ -101,7 +101,12 @@ const buttonTextLookup = {
 
 <template>
   <div class="m-auto flex flex-col items-center px-4">
-    <h1 class="my-10 text-4xl font-bold">🎡 Marquee Wheel 🎡</h1>
+    <a
+      target="_blank"
+      href="https://github.com/willnguyen1312/vue-marquee-wheel"
+      class="my-10 text-4xl text-black font-bold"
+      >🎡 Marquee Wheel 🎡</a
+    >
     <button
       class="text-dark-700 bg-gray-100 decoration-none cursor-pointer rounded-md px-3 py-2 text-sm font-medium"
       :disabled="state === 'slowing'"
