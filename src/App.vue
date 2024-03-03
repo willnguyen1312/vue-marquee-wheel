@@ -2,11 +2,11 @@
 import { ref, computed } from "vue";
 import { useRafFn, useEventListener } from "@vueuse/core";
 
-const items = ref<{ name: string }[]>(
+const items = ref<{ name: string; avatarUrl: string }[]>(
   JSON.parse(localStorage.getItem("items") ?? "[]")
 );
 
-const MAX_PIXELS_MOVED_PER_FRAME = 10;
+const MAX_PIXELS_MOVED_PER_FRAME = 13;
 const MIX_PIXELS_MOVED_PER_FRAME = 0;
 
 const SLOW_DOWN_FACTOR = 5;
@@ -56,20 +56,20 @@ const style = computed(() => {
 let currentInterval: number | null = null;
 
 const onWheelStop = () => {
-  const allImages = Array.from(
+  const allItems = Array.from(
     document.querySelectorAll(
       "div[data-candidate]"
     ) as NodeListOf<HTMLDivElement>
   );
 
-  for (const image of allImages) {
-    const rect = image.getBoundingClientRect();
-    // Check if image is in the middle of visible screen
+  for (const item of allItems) {
+    const rect = item.getBoundingClientRect();
+    // Check if item is in the middle of visible screen
     if (
       rect.left < window.innerWidth / 2 &&
       rect.right > window.innerWidth / 2
     ) {
-      result.value = image.textContent;
+      result.value = item.querySelector("img")?.alt ?? "No one";
       alert(`Welcome ${result.value} 🎉`);
       return;
     }
@@ -130,9 +130,9 @@ const buttonTextLookup = {
             data-candidate
             v-for="item in items"
             :key="item.name"
-            class="h-50 w-50 border-l-1 border-purple-300 border-l-solid"
+            class="h-50 w-50 grid place-items-center border-l-1 border-purple-300 border-l-solid border-r-4"
           >
-            {{ item.name }}
+            <img :alt="item.name" class="border-rd-4" :src="item.avatarUrl" />
           </div>
         </div>
 
@@ -142,9 +142,9 @@ const buttonTextLookup = {
             data-candidate
             v-for="item in items"
             :key="item.name"
-            class="h-50 w-50 border-l-1 border-purple-300 border-l-solid"
+            class="h-50 w-50 grid place-items-center border-l-1 border-purple-300 border-l-solid border-r-4"
           >
-            {{ item.name }}
+            <img :alt="item.name" class="border-rd-4" :src="item.avatarUrl" />
           </div>
         </div>
       </div>
