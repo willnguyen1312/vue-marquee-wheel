@@ -101,7 +101,7 @@ const buttonTextLookup = {
 
 <template>
   <div class="m-auto flex flex-col items-center px-4">
-    <h1 class="my-10 text-4xl font-bold">🚀 Demo Marquee 🚀</h1>
+    <h1 class="my-10 text-4xl font-bold">🎡 Marquee Wheel 🎡</h1>
     <button
       class="text-dark-700 bg-gray-100 decoration-none cursor-pointer rounded-md px-3 py-2 text-sm font-medium"
       :disabled="state === 'slowing'"
