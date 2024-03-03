@@ -46,7 +46,7 @@ const style = computed(() => {
 });
 let currentInterval: number | null = null;
 
-const getResult = () => {
+const printResultToConsole = () => {
   const allImages = Array.from(
     document.querySelectorAll(
       "div[data-candidate]"
@@ -55,7 +55,7 @@ const getResult = () => {
 
   for (const image of allImages) {
     const rect = image.getBoundingClientRect();
-    // Check image in the middle of the screen
+    // Check if image is in the middle of visible screen
     if (
       rect.left < window.innerWidth / 2 &&
       rect.right > window.innerWidth / 2
@@ -86,7 +86,7 @@ const handleClick = () => {
         pixelsMovedPerFrame.value = MIX_PIXELS_MOVED_PER_FRAME;
         currentInterval && clearInterval(currentInterval);
 
-        getResult();
+        printResultToConsole();
       }
     }, INTERVAL_TIME);
   }
