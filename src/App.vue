@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import { useRafFn } from "@vueuse/core";
+import { useRafFn, useEventListener } from "@vueuse/core";
 
-const items: { name: string }[] = JSON.parse(
-  localStorage.getItem("items") ?? "[]"
+const items = ref<{ name: string }[]>(
+  JSON.parse(localStorage.getItem("items") ?? "[]")
 );
 
 const MAX_PIXELS_MOVED_PER_FRAME = 10;
@@ -36,6 +36,15 @@ useRafFn(() => {
   }
 });
 
+useEventListener("storage", (event) => {
+  const { storageArea } = event;
+
+  if (storageArea === localStorage) {
+    localStorage.setItem("lastItems", JSON.stringify(items.value, null, 2));
+    items.value = JSON.parse(localStorage.getItem("items") ?? "[]");
+  }
+});
+
 const style = computed(() => {
   const bound = list.value?.clientWidth || 0;
   const newValue =
@@ -46,7 +55,7 @@ const style = computed(() => {
 });
 let currentInterval: number | null = null;
 
-const printResultToConsole = () => {
+const onWheelStop = () => {
   const allImages = Array.from(
     document.querySelectorAll(
       "div[data-candidate]"
@@ -61,7 +70,7 @@ const printResultToConsole = () => {
       rect.right > window.innerWidth / 2
     ) {
       result.value = image.textContent;
-      console.log("result", result.value);
+      alert(`Welcome ${result.value} 🎉`);
       return;
     }
   }
@@ -86,7 +95,7 @@ const handleClick = () => {
         pixelsMovedPerFrame.value = MIX_PIXELS_MOVED_PER_FRAME;
         currentInterval && clearInterval(currentInterval);
 
-        printResultToConsole();
+        onWheelStop();
       }
     }, INTERVAL_TIME);
   }
@@ -121,7 +130,7 @@ const buttonTextLookup = {
             data-candidate
             v-for="item in items"
             :key="item.name"
-            class="h-40 w-40 border-l-1 border-purple-300 border-l-solid"
+            class="h-50 w-50 border-l-1 border-purple-300 border-l-solid"
           >
             {{ item.name }}
           </div>
@@ -133,7 +142,7 @@ const buttonTextLookup = {
             data-candidate
             v-for="item in items"
             :key="item.name"
-            class="h-40 w-40 border-l-1 border-purple-300 border-l-solid"
+            class="h-50 w-50 border-l-1 border-purple-300 border-l-solid"
           >
             {{ item.name }}
           </div>
