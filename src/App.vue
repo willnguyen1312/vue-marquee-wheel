@@ -2,6 +2,10 @@
 import { ref, computed } from "vue";
 import { useRafFn } from "@vueuse/core";
 
+const items: { name: string }[] = JSON.parse(
+  localStorage.getItem("items") ?? "[]"
+);
+
 const MAX_PIXELS_MOVED_PER_FRAME = 10;
 const MIX_PIXELS_MOVED_PER_FRAME = 0;
 
@@ -40,21 +44,14 @@ const style = computed(() => {
     transform: `translateX(${newValue}px)`,
   };
 });
-
-const uniqueId = (() => {
-  let id = 0;
-  return () => ++id;
-})();
-
-const images: { src: string; id: number }[] = Array.from(
-  { length: 8 },
-  (_, index) => ({ src: `/${index + 1}.jpeg`, id: uniqueId() })
-);
-
 let currentInterval: number | null = null;
 
 const getResult = () => {
-  const allImages = Array.from(document.querySelectorAll("img") || []);
+  const allImages = Array.from(
+    document.querySelectorAll(
+      "div[data-candidate]"
+    ) as NodeListOf<HTMLDivElement>
+  );
 
   for (const image of allImages) {
     const rect = image.getBoundingClientRect();
@@ -63,7 +60,7 @@ const getResult = () => {
       rect.left < window.innerWidth / 2 &&
       rect.right > window.innerWidth / 2
     ) {
-      result.value = image.src;
+      result.value = image.textContent;
       console.log("result", result.value);
       return;
     }
@@ -115,22 +112,26 @@ const buttonTextLookup = {
     <div class="relative overflow-hidden w-full md:w-8/12 cursor-pointer">
       <div class="flex will-change-transform" :style="style">
         <div ref="list" class="flex flex-shrink-0 py-4 relative">
-          <img
-            v-for="image in images"
-            :key="image.id"
-            :src="image.src"
-            class="h-40 w-40"
-          />
+          <div
+            data-candidate
+            v-for="item in items"
+            :key="item.name"
+            class="h-40 w-40 border-l-1 border-purple-300 border-l-solid"
+          >
+            {{ item.name }}
+          </div>
         </div>
 
         <!-- Cloned stuff -->
         <div class="flex flex-shrink-0 py-4 relative">
-          <img
-            v-for="image in images"
-            :key="image.id"
-            :src="image.src"
-            class="h-40 w-40"
-          />
+          <div
+            data-candidate
+            v-for="item in items"
+            :key="item.name"
+            class="h-40 w-40 border-l-1 border-purple-300 border-l-solid"
+          >
+            {{ item.name }}
+          </div>
         </div>
       </div>
 
