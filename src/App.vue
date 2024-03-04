@@ -71,7 +71,7 @@ const onWheelStop = () => {
       rect.right > window.innerWidth / 2
     ) {
       result.value = item.querySelector("img")?.alt ?? "No one";
-      alert(`Welcome ${result.value} 🎉`);
+      alert(`Congratulations! 🥳 ${result.value} 🥳`);
       return;
     }
   }
