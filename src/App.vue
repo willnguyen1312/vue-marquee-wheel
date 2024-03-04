@@ -3,7 +3,7 @@ import { ref, computed } from "vue";
 import { useRafFn, useEventListener } from "@vueuse/core";
 
 const items = ref<{ name: string; avatarUrl: string }[]>(
-  JSON.parse(localStorage.getItem("items") ?? "[]"),
+  JSON.parse(localStorage.getItem("items") ?? "[]")
 );
 
 const MAX_PIXELS_MOVED_PER_FRAME = 13;
@@ -59,8 +59,8 @@ let currentInterval: number | null = null;
 const onWheelStop = () => {
   const allItems = Array.from(
     document.querySelectorAll(
-      "div[data-candidate]",
-    ) as NodeListOf<HTMLDivElement>,
+      "div[data-candidate]"
+    ) as NodeListOf<HTMLDivElement>
   );
 
   for (const item of allItems) {
@@ -115,7 +115,7 @@ const buttonTextLookup = {
       target="_blank"
       href="https://github.com/willnguyen1312/vue-marquee-wheel"
       class="my-10 text-4xl text-black font-bold"
-      >🎡 Marquee Wheel 🎡</a
+      >🎡 Vue Marquee 🎡</a
     >
     <button
       class="text-dark-700 bg-gray-100 decoration-none cursor-pointer rounded-md px-3 py-2 text-sm font-medium"

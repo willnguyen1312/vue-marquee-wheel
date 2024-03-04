@@ -13,7 +13,7 @@ export default defineConfig({
       manifest: {
         name: "Vue Marquee",
         short_name: "Marquee",
-        theme_color: "#ffffff",
+        theme_color: "#ec4899",
         icons: [
           {
             src: "/pwa-192x192.png",
