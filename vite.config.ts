@@ -11,7 +11,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png"],
       manifest: {
-        name: "Vue Marquee",
+        name: "🎡 Vue Marquee",
         short_name: "Marquee",
         theme_color: "#ec4899",
         icons: [
