@@ -8,6 +8,7 @@ const items = ref<{ name: string; avatarUrl: string }[]>(
 
 const MAX_PIXELS_MOVED_PER_FRAME = 13;
 const MIX_PIXELS_MOVED_PER_FRAME = 0;
+const INITIAl_PIXELS_MOVED_PER_FRAME = 2;
 
 const SLOW_DOWN_FACTOR = 5;
 const INTERVAL_TIME = 100;
@@ -18,7 +19,7 @@ const translateX = ref(0);
 const direction = ref<"left" | "right">("left");
 
 const list = ref<HTMLDivElement>();
-const pixelsMovedPerFrame = ref(MIX_PIXELS_MOVED_PER_FRAME);
+const pixelsMovedPerFrame = ref(INITIAl_PIXELS_MOVED_PER_FRAME);
 const state = ref<"idle" | "moving" | "slowing">("idle");
 const result = ref<string | null>(null);
 
@@ -150,7 +151,7 @@ const buttonTextLookup = {
       </div>
 
       <div
-        class="absolute top-0 bottom-0 z-1 w-0.5 bg-red-500 left-[50%] translate-x-[50%]"
+        class="absolute top-0 bottom-0 z-1 w-0.5 bg-pink-500 left-[50%] translate-x-[50%]"
       ></div>
     </div>
   </div>
