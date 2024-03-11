@@ -107,6 +107,14 @@ const buttonTextLookup = {
   moving: "Stop",
   slowing: "Slowing",
 };
+
+const people = [
+  { id: 1, name: "Annette Black" },
+  { id: 2, name: "Cody Fisher" },
+  { id: 3, name: "Courtney Henry" },
+  { id: 4, name: "Kathryn Murphy" },
+  { id: 5, name: "Theresa Webb" },
+];
 </script>
 
 <template>
@@ -155,4 +163,35 @@ const buttonTextLookup = {
       ></div>
     </div>
   </div>
+
+  <fieldset>
+    <legend class="text-base font-semibold leading-6 text-gray-900">
+      Members
+    </legend>
+    <div
+      class="mt-4 divide-y flex gap-4 divide-gray-200 border-b border-t border-gray-200"
+    >
+      <div
+        v-for="(person, personIdx) in people"
+        :key="personIdx"
+        class="relative flex items-start"
+      >
+        <div class="min-w-0 flex-1 text-sm leading-6">
+          <label
+            :for="`person-${person.id}`"
+            class="select-none font-medium text-gray-900"
+            >{{ person.name }}</label
+          >
+        </div>
+        <div class="flex h-6 items-center">
+          <input
+            :id="`person-${person.id}`"
+            :name="`person-${person.id}`"
+            type="checkbox"
+            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+          />
+        </div>
+      </div>
+    </div>
+  </fieldset>
 </template>
