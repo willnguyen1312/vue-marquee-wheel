@@ -3,16 +3,16 @@ import { ref, computed } from "vue";
 import { useRafFn, useEventListener } from "@vueuse/core";
 
 const people = ref<{ name: string; avatarUrl: string }[]>(
-  JSON.parse(localStorage.getItem("items") ?? "[]"),
+  JSON.parse(localStorage.getItem("items") ?? "[]")
 );
 
 const includedPeople = ref<string[]>(
-  JSON.parse(localStorage.getItem("includedPeople") ?? "[]"),
+  JSON.parse(localStorage.getItem("includedPeople") ?? "[]")
 );
 
 const finalPeople = computed(() => {
   return people.value.filter((item) =>
-    includedPeople.value.includes(item.name),
+    includedPeople.value.includes(item.name)
   );
 });
 
@@ -69,8 +69,8 @@ let currentInterval: number | null = null;
 const onWheelStop = () => {
   const allItems = Array.from(
     document.querySelectorAll(
-      "div[data-candidate]",
-    ) as NodeListOf<HTMLDivElement>,
+      "div[data-candidate]"
+    ) as NodeListOf<HTMLDivElement>
   );
 
   for (const item of allItems) {
