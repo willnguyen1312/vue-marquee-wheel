@@ -193,6 +193,7 @@ const buttonTextLookup = {
             class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
             v-model="includedPeople"
             :value="person.name"
+            :disabled="state === 'slowing' || state === 'moving'"
           />
         </div>
       </div>
