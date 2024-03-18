@@ -1,14 +1,52 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { useRafFn, useEventListener } from "@vueuse/core";
+import { decode, encode } from "./utils";
 
-const people = ref<{ name: string; avatarUrl: string }[]>(
-  JSON.parse(localStorage.getItem("items") ?? "[]")
-);
+// Check if URL has state query
+const urlParams = new URLSearchParams(window.location.search);
+const stateQuery = urlParams.get("state") ?? "";
+const decodedState = decode(stateQuery) ?? {};
 
-const includedPeople = ref<string[]>(
-  JSON.parse(localStorage.getItem("includedPeople") ?? "[]")
-);
+type Person = {
+  name: string;
+  avatarUrl: string;
+};
+
+const initialPeople: Person[] =
+  decodedState.people ?? JSON.parse(localStorage.getItem("items") ?? "[]");
+const initialIncludedPeople: string[] =
+  decodedState.includedPeople ??
+  JSON.parse(localStorage.getItem("includedPeople") ?? "[]");
+
+const people = ref<Person[]>(initialPeople);
+
+const includedPeople = ref<string[]>(initialIncludedPeople);
+
+watchEffect(() => {
+  localStorage.setItem(
+    "includedPeople",
+    JSON.stringify(includedPeople.value, null, 2)
+  );
+  localStorage.setItem("items", JSON.stringify(people.value, null, 2));
+});
+
+window.addEventListener("keydown", (e: KeyboardEvent) => {
+  // Check if Command or Control key is pressed with s letter
+  if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+    e.preventDefault();
+
+    // Update URL to include search query in URL
+    const decodedState = encode({
+      people: people.value,
+      includedPeople: includedPeople.value,
+    });
+
+    history.replaceState(null, "", `?state=${decodedState}`);
+    // Copy url to clipboard
+    navigator.clipboard.writeText(window.location.href);
+  }
+});
 
 const finalPeople = computed(() => {
   return people.value.filter((item) =>
@@ -128,7 +166,7 @@ const buttonTextLookup = {
       >🎡 Vue Marquee 🎡</a
     >
     <button
-      class="text-dark-700 bg-gray-100 decoration-none cursor-pointer rounded-md px-3 py-2 text-sm font-medium"
+      class="text-dark-700 bg-gray-100 decoration-none cursor-pointer rounded-md px-3 py-2 text-sm font-medium border-cyan-500 border-solid border-2"
       :disabled="state === 'slowing'"
       @click="handleClick"
     >
