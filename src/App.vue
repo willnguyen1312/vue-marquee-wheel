@@ -26,7 +26,7 @@ const includedPeople = ref<string[]>(initialIncludedPeople);
 watchEffect(() => {
   localStorage.setItem(
     "includedPeople",
-    JSON.stringify(includedPeople.value, null, 2),
+    JSON.stringify(includedPeople.value, null, 2)
   );
   localStorage.setItem("items", JSON.stringify(people.value, null, 2));
 });
@@ -50,7 +50,7 @@ window.addEventListener("keydown", (e: KeyboardEvent) => {
 
 const finalPeople = computed(() => {
   return people.value.filter((item) =>
-    includedPeople.value.includes(item.name),
+    includedPeople.value.includes(item.name)
   );
 });
 
@@ -107,8 +107,8 @@ let currentInterval: number | null = null;
 const onWheelStop = () => {
   const allItems = Array.from(
     document.querySelectorAll(
-      "div[data-candidate]",
-    ) as NodeListOf<HTMLDivElement>,
+      "div[data-candidate]"
+    ) as NodeListOf<HTMLDivElement>
   );
 
   for (const item of allItems) {
@@ -219,7 +219,7 @@ const buttonTextLookup = {
         <div class="min-w-0 flex-1 text-sm leading-6">
           <label
             :for="`person-${person.name}`"
-            class="select-none font-medium text-gray-900"
+            class="select-none font-medium text-gray-900 cursor-pointer"
             >{{ person.name }}</label
           >
         </div>
